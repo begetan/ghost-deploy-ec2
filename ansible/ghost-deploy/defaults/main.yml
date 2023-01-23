@@ -1,0 +1,21 @@
+---
+# defaults file for ghost-deploy
+blog_url: localhost
+ghost_image: ghost:latest
+ghost_host: "ghost"
+ghost_port: 2368
+ghost_base_dir: "/var/lib/ghost"
+
+db_client: mysql
+db_host: mysql
+db_user: root
+db_name: ghost
+db_volume: /var/lib/mysql
+
+blog_mail_host: some_stmp
+blog_mail_port: 465
+blog_mail_from: '"Report from blog" mail@blog.com'
+blog_mail_username: "ghost"
+blog_mail_password: "StrongMailPasswrd"
+
+docker_network: app_net

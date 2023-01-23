@@ -1,0 +1,11 @@
+#!/usr/bin/env bash
+
+docker stop {{ db_host }} ghost && sync
+
+echo "Arhive site directory..."
+tar -czf /backup/site-$(date "+%F").tar.gz {{ ghost_base_dir }}
+
+echo "Archive database directory..."
+tar -czf /backup/database-$(date "+%F").tar.gz {{ db_volume }}
+docker start {{ db_host }} ghost && sync
+echo "Backup completed"

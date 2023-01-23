@@ -1,0 +1,17 @@
+galaxy_info:
+  author: begetan
+  description: role to install ghost blog
+  company: test company
+
+  license: MIT
+
+  min_ansible_version: 2.4
+
+  platforms:
+    - name: Ubuntu
+      versions:
+        - 22.04
+        - 20.04
+  galaxy_tags: []
+
+dependencies: []

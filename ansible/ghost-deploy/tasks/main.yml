@@ -1,0 +1,14 @@
+---
+# tasks file for ghost-deploy
+
+- name: Create network
+  docker_network:
+    name: "{{ docker_network }}"
+
+- import_tasks: mysql.yml
+
+- import_tasks: ghost.yml
+  tags: ghost
+
+- import_tasks: backup.yml
+  tags: ghost

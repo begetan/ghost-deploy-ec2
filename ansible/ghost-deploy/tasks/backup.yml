@@ -1,0 +1,28 @@
+---
+# Task for backup ghost application
+- name: "Create backup directories"
+  file:
+    path: "/backup"
+    owner: root
+    group: root
+    state: directory
+    mode: 0755
+
+- name: Install backup.sh
+  become: true
+  become_user: "root"
+  template:
+    src: backup.sh.j2
+    dest: /root/backup.sh
+    backup: true
+    mode: 0744
+    owner: root
+    group: root
+
+- name: Add backup cron job
+  cron:
+    name: "Backup data"
+    minute: "5"
+    hour: "6"
+    job: "/root/backup.sh 2>&1 | logger -t backup"
+

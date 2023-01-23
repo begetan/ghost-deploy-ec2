@@ -1,0 +1,40 @@
+---
+# Task for setup ghost application
+- name: "Create base directories"
+  file:
+    path: "{{ ghost_base_dir }}/content"
+    owner: root
+    group: root
+    state: directory
+    mode: 0755
+
+- name: "Start ghost container"
+  docker_container:
+    name: ghost
+    image: "{{ ghost_image }}"
+    restart_policy: unless-stopped
+    networks:
+      - name: "{{ docker_network }}"
+    env:
+      url: "{{ blog_url }}"
+      ghost__listen_host: "{{ ghost_host | string }}"
+      ghost__listen_port: "{{ ghost_port | string }}"
+      database__client: "{{ db_client }}"
+      database__connection__host: "{{ db_host }}"
+      database__connection__user: "{{ db_user }}"
+      database__connection__password: "{{ db_password }}"
+      database__connection__database: "{{ db_name }}"
+      mail__from: "{{ blog_mail_from }}"
+      mail__transport: "SMTP"
+      mail__options__host: "{{ blog_mail_host }}"
+      mail__options__port: "{{ blog_mail_port | string }}"
+      mail__options__secureConnection: "true"
+      mail__options__auth__user: "{{ blog_mail_username }}"
+      mail__options__auth__pass: "{{ blog_mail_password }}"
+#    expose:
+#      - "{{ ghost_port }} |string "
+    ports:
+      - "80:{{ghost_port}}"
+    volumes:
+      - "{{ ghost_base_dir }}/content:/var/lib/ghost/content"
+    state: started
